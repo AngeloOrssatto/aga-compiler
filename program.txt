@@ -1,0 +1,9 @@
+int a = 1;
+int _b$d = 2.5.2;
+# teste
+# #testando
+int c;
+c = a + b; #balbalba
+if (c < a) {
+    write (c);
+}
