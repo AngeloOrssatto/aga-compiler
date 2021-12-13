@@ -37,7 +37,7 @@ class Lexical_Analizer:
                         temp_tokens.append([line_character, row, col-len(line_character)])
                     if (line[i] in self.symbols):
                         # look ahead
-                        if (line[i+1] in self.symbols):
+                        if (line[i+1] == '='):
                             line_character = line[i] + line[i+1]
                             temp_tokens.append([line_character, row, col-len(line_character)])
                             two_symbols = True
