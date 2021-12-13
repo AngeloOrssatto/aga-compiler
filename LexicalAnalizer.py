@@ -19,6 +19,7 @@ class Lexical_Analizer:
         temp_tokens = []
         col = 0
         row = 0
+        two_symbols = False
         for line in self.program:
             # print(line)
             row+=1
@@ -26,13 +27,22 @@ class Lexical_Analizer:
             line_character = ''
             for i in range (len(line)):
                 col+=1
+                if two_symbols:
+                    two_symbols = False
+                    continue
                 if (line[i] == '#'):
                     break
                 if (line[i] in self.useless or line[i] in self.symbols):
                     if (len(line_character) != 0):
                         temp_tokens.append([line_character, row, col-len(line_character)])
-                    if (line[i] in self.symbols): 
-                        temp_tokens.append([line[i], row, col-len(line_character)])
+                    if (line[i] in self.symbols):
+                        # look ahead
+                        if (line[i+1] in self.symbols):
+                            line_character = line[i] + line[i+1]
+                            temp_tokens.append([line_character, row, col-len(line_character)])
+                            two_symbols = True
+                        else:
+                            temp_tokens.append([line[i], row, col-len(line_character)])
                     # print('token', line_character, len(line_character))
                     line_character = ''
                 else:
@@ -80,5 +90,5 @@ class Lexical_Analizer:
                 temp = tokens[word]
                 self.tokens.append([temp, word, row, col])
 
-        print(self.tokens)
+        # print(self.tokens)
         return(self.tokens)

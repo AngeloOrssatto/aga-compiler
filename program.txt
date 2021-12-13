@@ -3,7 +3,7 @@ int _b$d = 2.5.2;
 # teste
 # #testando
 int c;
-c = a + b; #balbalba
-if (c < a) {
+c = a + b; #blabla
+if (c <= a) {
     write (c);
 }
