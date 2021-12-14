@@ -4,6 +4,9 @@ from terminals import reserved_words, symbols, useless
 def main():
     file = open('./program.txt', 'r')
     program = file.readlines()
+    for line in program:
+        print(line)
+    print("--------------------------------")
     lexical = Lexical_Analizer(program, reserved_words, symbols, useless)
     tokens = lexical.analyze()
     print("--------------------------------")

@@ -27,28 +27,28 @@ class Lexical_Analizer:
             line_character = ''
             for i in range (len(line)):
                 col+=1
-                if two_symbols:
+                if two_symbols: # pass by through the next i in for, 'cause the token had two symbols in it
                     two_symbols = False
                     continue
-                if (line[i] == '#'):
+                if (line[i] == '#'): # ignore comments
                     break
                 if (line[i] in self.useless or line[i] in self.symbols):
-                    if (len(line_character) != 0):
+                    if (len(line_character) != 0): # for a single char symbol
                         temp_tokens.append([line_character, row, col-len(line_character)])
                     if (line[i] in self.symbols):
-                        # look ahead
+                        # look ahead for two symbols tokens
                         if line[i] in ['<', '>', '!', '=']:
                             if (line[i+1] == '='):
                                 line_character = line[i] + line[i+1]
                                 temp_tokens.append([line_character, row, col-len(line_character)])
                                 two_symbols = True
-                            else:
+                            else: # keep the possible single token (>,<,=)
                                 temp_tokens.append([line[i], row, col-len(line_character)])
-                        else:
+                        else: # others symbols
                             temp_tokens.append([line[i], row, col-len(line_character)])
                     # print('token', line_character, len(line_character))
                     line_character = ''
-                else:
+                else: # identifier and number tokens
                     line_character = line_character + line[i] 
         return temp_tokens
 
@@ -59,15 +59,14 @@ class Lexical_Analizer:
         for tk in temp_tokens:
             # print(tk[0])
             word, row, col = tk[0], tk[1], tk[2]
-            if word not in self.reserved_words and word not in self.symbols:
+            if word not in self.reserved_words and word not in self.symbols: # analyze words and numbers
                 isInt = True
-                if word[0].isalpha():
-                    for i in word:
+                if word[0].isalpha(): # ids must beggin with an alphabetic char
+                    for i in word: # check the full word to match with the pattern
                         if not (i.isalpha() or i.isdigit()):
-                            # erro -> tem q ver se coloca o token anyway
                             print('\x1b[1;31m' + '[%d,%d] !ERROR' % (row, col) + '\x1b[0m' + ' Wrong declaration of identificator!')
                             success = False
-                            # modo panico
+                            # panic mode - wash away the rest of the word from the wrong char
                             # print(word.index(i))
                             n_word = ''
                             for c in range (0, word.index(i)):
@@ -78,13 +77,12 @@ class Lexical_Analizer:
                     # append the ID
                     self.tokens.append(["{ID}", word, row, col])
 
-                elif word[0].isdigit():
-                    
+                elif word[0].isdigit(): #numbers must beggin with a digit
                     for i in range (len(word)):
-                        if word[i] == '.' and not isInt:
-                            # erro float
+                        if word[i] == '.' and not isInt: # check the full number to match with the float pattern
                             print('\x1b[1;31m' + '[%d,%d] !ERROR' % (row, col) + '\x1b[0m' + ' Wrong declaration of float type!')
                             success = False
+                            # panic mode - wash away the rest of the word from the wrong char
                             n_word = ''
                             # print(word[i])
                             for c in range (0, i):
@@ -102,7 +100,7 @@ class Lexical_Analizer:
                 else:
                     print('\x1b[1;31m' + '[%d,%d] !ERROR' % (row, col) + '\x1b[0m' + ' Wrong declaration of identificator!')
                     success = False
-                    # modo panico
+                    # panic mode - wash away the rest of the word from the wrong char
                     n_word = ''
                     # print(word[i])
                     for c in range (0, i):
