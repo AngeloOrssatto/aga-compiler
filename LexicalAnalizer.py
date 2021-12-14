@@ -37,10 +37,13 @@ class Lexical_Analizer:
                         temp_tokens.append([line_character, row, col-len(line_character)])
                     if (line[i] in self.symbols):
                         # look ahead
-                        if (line[i+1] == '='):
-                            line_character = line[i] + line[i+1]
-                            temp_tokens.append([line_character, row, col-len(line_character)])
-                            two_symbols = True
+                        if line[i] in ['<', '>', '!', '=']:
+                            if (line[i+1] == '='):
+                                line_character = line[i] + line[i+1]
+                                temp_tokens.append([line_character, row, col-len(line_character)])
+                                two_symbols = True
+                            else:
+                                temp_tokens.append([line[i], row, col-len(line_character)])
                         else:
                             temp_tokens.append([line[i], row, col-len(line_character)])
                     # print('token', line_character, len(line_character))
@@ -64,16 +67,30 @@ class Lexical_Analizer:
                             # erro -> tem q ver se coloca o token anyway
                             print('\x1b[1;31m' + '[%d,%d] !ERROR' % (row, col) + '\x1b[0m' + ' Wrong declaration of identificator!')
                             # modo panico
+                            print(word.index(i))
+                            n_word = ''
+                            for c in range (0, word.index(i)):
+                                n_word = n_word + word[c]
+                            print(n_word)
+                            word = n_word
+                            break
                     # append the ID
                     self.tokens.append(["{ID}", word, row, col])
 
                 elif word[0].isdigit():
                     
-                    for i in word:
-                        if i == '.' and not isInt:
+                    for i in range (len(word)):
+                        if word[i] == '.' and not isInt:
                             # erro float
                             print('\x1b[1;31m' + '[%d,%d] !ERROR' % (row, col) + '\x1b[0m' + ' Wrong declaration of float type!')
-                        elif i == '.' :
+                            n_word = ''
+                            print(word[i])
+                            for c in range (0, i):
+                                n_word = n_word + word[c]
+                            print(n_word)
+                            word = n_word
+                            break
+                        elif word[i] == '.' :
                             isInt = False
                     if isInt:
                         self.tokens.append(["{INT_NUMBER}", word, row, col])

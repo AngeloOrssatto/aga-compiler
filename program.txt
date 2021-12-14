@@ -1,8 +1,8 @@
-int a = 1;
-int b@1 = 2.5.5;
-# teste
-int c;
-c = a + b; #blabla
-if (c <= a) {
-    write (c);
+int a = 7;
+int i = 0;
+int temp =;
+
+for i in range (0, 10) {
+    temp = a * i + 1;
+    write(temp)
 }
