@@ -6,10 +6,13 @@ def main():
     program = file.readlines()
     lexical = Lexical_Analizer(program, reserved_words, symbols, useless)
     tokens = lexical.analyze()
+    print("--------------------------------")
+    print('Tokens:')
     print(tokens)
     return
 
 
 if __name__ == "__main__":
-    print("Compilador AGA - H")
+    print("\n\tAGA - H Compiler")
+    print("--------------------------------")
     main()

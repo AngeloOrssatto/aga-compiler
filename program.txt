@@ -1,6 +1,6 @@
 int a = 7;
 int i = 0;
-int temp =;
+int temp = 22.22;
 
 for i in range (0, 10) {
     temp = a * i + 1;

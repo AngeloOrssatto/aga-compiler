@@ -53,9 +53,9 @@ class Lexical_Analizer:
         return temp_tokens
 
     def analyze(self):
-        print('-> Analisador léxico')
+        print('Lexical Analyzer...')
         temp_tokens = self.token_separator()
-
+        success = True
         for tk in temp_tokens:
             # print(tk[0])
             word, row, col = tk[0], tk[1], tk[2]
@@ -66,12 +66,13 @@ class Lexical_Analizer:
                         if not (i.isalpha() or i.isdigit()):
                             # erro -> tem q ver se coloca o token anyway
                             print('\x1b[1;31m' + '[%d,%d] !ERROR' % (row, col) + '\x1b[0m' + ' Wrong declaration of identificator!')
+                            success = False
                             # modo panico
-                            print(word.index(i))
+                            # print(word.index(i))
                             n_word = ''
                             for c in range (0, word.index(i)):
                                 n_word = n_word + word[c]
-                            print(n_word)
+                            # print(n_word)
                             word = n_word
                             break
                     # append the ID
@@ -83,11 +84,12 @@ class Lexical_Analizer:
                         if word[i] == '.' and not isInt:
                             # erro float
                             print('\x1b[1;31m' + '[%d,%d] !ERROR' % (row, col) + '\x1b[0m' + ' Wrong declaration of float type!')
+                            success = False
                             n_word = ''
-                            print(word[i])
+                            # print(word[i])
                             for c in range (0, i):
                                 n_word = n_word + word[c]
-                            print(n_word)
+                            # print(n_word)
                             word = n_word
                             break
                         elif word[i] == '.' :
@@ -99,8 +101,14 @@ class Lexical_Analizer:
 
                 else:
                     print('\x1b[1;31m' + '[%d,%d] !ERROR' % (row, col) + '\x1b[0m' + ' Wrong declaration of identificator!')
+                    success = False
                     # modo panico
-                    self.tokens.append(["{ID}", word, row, col])
+                    n_word = ''
+                    # print(word[i])
+                    for c in range (0, i):
+                        n_word = n_word + word[c]
+                    # print(n_word)
+                    self.tokens.append(["{ID}", n_word, row, col])
 
             else:
                 # append the reserved word or symbol
@@ -108,4 +116,6 @@ class Lexical_Analizer:
                 self.tokens.append([temp, word, row, col])
 
         # print(self.tokens)
+        if success:
+            print('\x1b[1;32m' + 'Compiled Successfully' + '\x1b[0m')
         return(self.tokens)
