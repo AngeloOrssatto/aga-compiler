@@ -1,7 +1,6 @@
 int a = 1;
-int b = 2.5;
+int b@1 = 2.5.5;
 # teste
-
 int c;
 c = a + b; #blabla
 if (c <= a) {

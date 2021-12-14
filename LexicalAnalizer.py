@@ -62,8 +62,8 @@ class Lexical_Analizer:
                     for i in word:
                         if not (i.isalpha() or i.isdigit()):
                             # erro -> tem q ver se coloca o token anyway
-                            print('id ta errado em [', row, ',', col, ']')
-                            break
+                            print('\x1b[1;31m' + '[%d,%d] !ERROR' % (row, col) + '\x1b[0m' + ' Wrong declaration of identificator!')
+                            # modo panico
                     # append the ID
                     self.tokens.append(["{ID}", word, row, col])
 
@@ -72,8 +72,7 @@ class Lexical_Analizer:
                     for i in word:
                         if i == '.' and not isInt:
                             # erro float
-                            print('float ta errado em [', row, ',', col, ']')
-                            break
+                            print('\x1b[1;31m' + '[%d,%d] !ERROR' % (row, col) + '\x1b[0m' + ' Wrong declaration of float type!')
                         elif i == '.' :
                             isInt = False
                     if isInt:
@@ -82,7 +81,8 @@ class Lexical_Analizer:
                         self.tokens.append(["{FLOAT_NUMBER}", word, row, col])
 
                 else:
-                    print('algo de errado nao esta certo em [', row, ',', col, ']')
+                    print('\x1b[1;31m' + '[%d,%d] !ERROR' % (row, col) + '\x1b[0m' + ' Wrong declaration of identificator!')
+                    # modo panico
                     self.tokens.append(["{ID}", word, row, col])
 
             else:
