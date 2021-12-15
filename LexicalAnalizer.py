@@ -92,13 +92,24 @@ class Lexical_Analizer:
                             break
                         elif word[i] == '.' :
                             isInt = False
+                        
+                        if not word[i].isdigit() and not word[i] == '.':
+                            print('\x1b[1;31m' + '[%d,%d] !ERROR' % (row, col) + '\x1b[0m' + ' Wrong declaration of float type!')
+                            success = False
+                            n_word = ''
+                            # print(word[i])
+                            for c in range (0, i):
+                                n_word = n_word + word[c]
+                            # print(n_word)
+                            word = n_word
+                            break
                     if isInt:
                         self.tokens.append(["{INT_NUMBER}", word, row, col])
                     else:
                         self.tokens.append(["{FLOAT_NUMBER}", word, row, col])
 
                 else:
-                    print('\x1b[1;31m' + '[%d,%d] !ERROR' % (row, col) + '\x1b[0m' + ' Wrong declaration of identificator!')
+                    print('\x1b[1;31m' + '[%d,%d] !ERROR' % (row, col) + '\x1b[0m' + ' Invalid character!')
                     success = False
                     # panic mode - wash away the rest of the word from the wrong char
                     n_word = ''
