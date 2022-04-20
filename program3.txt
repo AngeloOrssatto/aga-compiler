@@ -1,0 +1,9 @@
+write('area do retangulo');
+
+float area;
+float base;
+float altura;
+
+area = base * altura;
+
+write(area);

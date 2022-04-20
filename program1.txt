@@ -19,28 +19,3 @@ if (media >= 70.0) {
     write('voce esta reprovado');
     write(reprovado);
 }
-
-# ---------------------------
-
-int i = 0;
-
-for i in range (0, 10) {
-    write(i*2);
-}
-
-do {
-    write(i*2+5/2);
-    i = i + 1
-} while (i <= 20)
-
-# --------------------------
-
-write('area do retangulo');
-
-float area;
-float base;
-float altura;
-
-area = base * altura;
-
-write(area);
