@@ -3,7 +3,7 @@ from SyntaticAnalizer import Syntatic_Analizer
 from terminals import reserved_words, symbols, useless
 
 def main():
-    file = open('./program1.txt', 'r')
+    file = open('./program2.txt', 'r')
     program = file.readlines()
     # for line in program:
     #     print(line)
