@@ -4,7 +4,7 @@ df = pd.read_excel('TABELA PREDITIVA-v3.xlsx', index_col='PRODUCTION')
 
 print(df)
 # usar df.loc['PROUÇÃO', 'SIMBOLO'] 
-res = df.loc['CHAR_AUX', 'A']
+res = df.loc['PROC', 'int']
 print(type(res))
 # separa por espaço 
 sep = res.split()

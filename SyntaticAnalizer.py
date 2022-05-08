@@ -35,7 +35,7 @@ class Syntatic_Analizer:
 
         parsing_table = pd.read_excel('TABELA PREDITIVA-v3.xlsx', index_col='PRODUCTION')
         
-        self.stack.append("S")
+        self.stack.append("PROC")
         self.stack.append("$")
         #print(self.stack)
 
@@ -47,18 +47,35 @@ class Syntatic_Analizer:
         # for i in range (0, len(self.sentence)-1):
             # Se for terminal
             print('topo pilha:', X)
+            print('leitura sentença:', a)
             print('pilha:', self.stack)
+            print('sentença:', self.sentence)
+
             if X not in self.non_terminals:
                 # print('terminal', self.stack[i])
                 if X == a:
-                    print('desempilha', X, 'avança na sentença')
+                    # desempilha X
                     self.stack.pop(0)
+                    # avança na sentença
                     i += 1
                 else:
-                    print('\x1b[1;31m' + '!ERROR')
+                    print('\x1b[1;31m' + '!ERROR' + '\x1b[0m' + ' - Primeiro caso')
 
             # Se não for terminal
             else:
-                print('nao terminal', X)
-                self.stack.pop(0)
+                if type(parsing_table.loc[X, a]) is str:
+                    # desempilha X
+                    self.stack.pop(0)
+                    print(self.stack)
+                    # empilha produção ao contrario
+                    res = parsing_table.loc[X, a]
+                    res = res.split()
+                    del(res[0:2])
+                    res = [el for el in reversed(res)]
+                    for el in res:
+                        self.stack.insert(0, el)
+                    
+                else:
+                    print('\x1b[1;31m' + '!ERROR' + '\x1b[0m' + ' - Segundo caso')
 
+                
