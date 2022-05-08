@@ -31,15 +31,32 @@ class Syntatic_Analizer:
         print('Sintatic Analyzer...')
         self.define_sentence()
         
-        self.stack.append("{S}")
+        self.stack.append("Q")
+        self.stack.append("int")
+        self.stack.append("S")
         self.stack.append("$")
         #print(self.stack)
 
-        for i in range (0, len(self.sentence)-1):
+        i = 0
+        X = self.stack[0]
+        while X != '$': 
+            X = self.stack[0]
+            a = self.sentence[i]
+        # for i in range (0, len(self.sentence)-1):
             # Se for terminal
-            if self.stack[i] not in self.non_terminals:
-                print('terminal', self.stack[i])
+            print('topo pilha:', X)
+            print('pilha:', self.stack)
+            if X not in self.non_terminals:
+                # print('terminal', self.stack[i])
+                if X == a:
+                    print('desempilha', X, 'avança na sentença')
+                    self.stack.pop(0)
+                    i += 1
+                else:
+                    print('\x1b[1;31m' + '!ERROR')
+
             # Se não for terminal
             else:
-                print('nao terminal', self.stack[i])
+                print('nao terminal', X)
+                self.stack.pop(0)
 

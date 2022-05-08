@@ -1,3 +1,4 @@
 non_terminals = {
-    '{S}'
+    'S',
+    'Q'
 }
