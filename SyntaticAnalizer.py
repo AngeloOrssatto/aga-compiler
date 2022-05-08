@@ -1,3 +1,5 @@
+import pandas as pd
+
 from terminals import tokens, reserved_words, symbols
 from grammar import non_terminals
 class Syntatic_Analizer:
@@ -30,9 +32,9 @@ class Syntatic_Analizer:
     def analyze(self):
         print('Sintatic Analyzer...')
         self.define_sentence()
+
+        parsing_table = pd.read_excel('TABELA PREDITIVA-v3.xlsx', index_col='PRODUCTION')
         
-        self.stack.append("Q")
-        self.stack.append("int")
         self.stack.append("S")
         self.stack.append("$")
         #print(self.stack)
