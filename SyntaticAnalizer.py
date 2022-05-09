@@ -25,7 +25,14 @@ class Syntatic_Analizer:
         for item in self.program_tokens:
             # print(item)
             self.sentence.append(item[1])
+        # TO DO
+        # for item in self.sentence:
+        #     if item not in self.reserved_words and item not in self.symbols:
+        #         print(item, self.sentence.index(item))
+
+        
         self.sentence.append('$')
+
         # print(self.sentence)
         
 
@@ -45,37 +52,51 @@ class Syntatic_Analizer:
             X = self.stack[0]
             a = self.sentence[i]
         # for i in range (0, len(self.sentence)-1):
-            # Se for terminal
+            print('pilha:', self.stack)
+            print('senteça:', self.sentence)
             print('topo pilha:', X)
             print('leitura sentença:', a)
-            print('pilha:', self.stack)
-            print('sentença:', self.sentence)
+            print('---------------------------------------------------------------------')
+            # print('sentença:', self.sentence)
 
+            # Se for terminal
             if X not in self.non_terminals:
+                # if X == 'VAZIO':
+                #     self.stack.pop(0)
                 # print('terminal', self.stack[i])
                 if X == a:
                     # desempilha X
                     self.stack.pop(0)
                     # avança na sentença
-                    i += 1
+                    # i += 1
+                    self.sentence.pop(0)
                 else:
                     print('\x1b[1;31m' + '!ERROR' + '\x1b[0m' + ' - Primeiro caso')
+                    break
 
             # Se não for terminal
             else:
+                # if X == 'VAZIO':
+                #     self.stack.pop(0)
                 if type(parsing_table.loc[X, a]) is str:
                     # desempilha X
                     self.stack.pop(0)
-                    print(self.stack)
+                    # print(self.stack)
                     # empilha produção ao contrario
                     res = parsing_table.loc[X, a]
                     res = res.split()
                     del(res[0:2])
                     res = [el for el in reversed(res)]
-                    for el in res:
-                        self.stack.insert(0, el)
+                    if res == ['VAZIO']:
+                        pass
+                    else:
+                        for el in res:
+                            self.stack.insert(0, el)
+                        # print('o que empilhou:', res)
+                    # print(self.stack)
                     
                 else:
                     print('\x1b[1;31m' + '!ERROR' + '\x1b[0m' + ' - Segundo caso')
+                    break
 
                 

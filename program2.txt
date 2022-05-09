@@ -1,5 +1,12 @@
-int i = 0;
+int i;
+i = 0;
 
-for i in range (0, 10) {
-    write(i*2);
+if (true > b and -4 == 0 and not(c)) {
+    i = 5;
+} else {
+    i = 9;
+    if (b or c) {
+        read(a);
+    }
 }
+

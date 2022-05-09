@@ -3,8 +3,11 @@ import pandas as pd
 df = pd.read_excel('TABELA PREDITIVA-v3.xlsx', index_col='PRODUCTION')
 
 print(df)
+
+print(df.columns)
+
 # usar df.loc['PROUÇÃO', 'SIMBOLO'] 
-res = df.loc['PROC', 'int']
+res = df.loc['ID_TYPE_ARITH', '0']
 print(type(res))
 # separa por espaço 
 sep = res.split()
