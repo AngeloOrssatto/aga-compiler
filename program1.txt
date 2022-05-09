@@ -9,13 +9,13 @@ read(nota2);
 media = nota1 + nota2;
 media = media / 2;
 
-char aprovado = 'a';
-char reprovado = 'f';
+char aprovado;
+aprovado = 'a';
+char reprovado;
+reprovado = 'f';
 
 if (media >= 70.0) {
-    write('voce esta aprovado');
     write(aprovado);
 } else {
-    write('voce esta reprovado');
     write(reprovado);
 }

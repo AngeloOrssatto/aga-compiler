@@ -13,6 +13,7 @@ class Syntatic_Analizer:
     stack = []
     sentence = []
     non_terminals = non_terminals
+    tokens_localization = []
 
     def __init__(self, program, reserved_words, symbols, useless, program_tokens):
         self.program = program
@@ -26,15 +27,19 @@ class Syntatic_Analizer:
             if item[1] not in self.reserved_words:
                 for i in item[1]:
                     self.sentence.append(i)
+                    self.tokens_localization.append([item[2], item[3]])
             else:
                 self.sentence.append(item[1])
+                self.tokens_localization.append([item[2], item[3]])
         
         self.sentence.append('$')
-        
+        print(self.tokens_localization)
 
     def analyze(self):
         print('Sintatic Analyzer...')
         self.define_sentence()
+
+        success = True
 
         parsing_table = pd.read_excel('TABELA PREDITIVA-v3.xlsx', index_col='PRODUCTION')
         
@@ -66,9 +71,14 @@ class Syntatic_Analizer:
                     # avança na sentença
                     # i += 1
                     self.sentence.pop(0)
+                    if len(self.tokens_localization) > 0: 
+                        self.tokens_localization.pop(0)
                 else:
-                    print('\x1b[1;31m' + '!ERROR' + '\x1b[0m' + ' - Primeiro caso')
+                    print('\x1b[1;31m' + '!ERROR' + '\x1b[0m' + ' - Primeiro caso: Unexpected token in line', self.tokens_localization[0][0], 'column', self.tokens_localization[0][1])
+                    success = False
                     break
+                    # avança na sentença se simbolos forem diferentes
+                    self.sentence.pop(0)
 
             # Se não for terminal
             else:
@@ -92,7 +102,20 @@ class Syntatic_Analizer:
                     # print(self.stack)
                     
                 else:
-                    print('\x1b[1;31m' + '!ERROR' + '\x1b[0m' + ' - Segundo caso')
+                    print('\x1b[1;31m' + '!ERROR' + '\x1b[0m' + ' - Segundo caso: Unexpected token in line', self.tokens_localization[0][0], 'column', self.tokens_localization[0][1])
+                    success = False
+
                     break
+                    # modo panico
+                    # SYNC
+                    if parsing_table.loc[X, a] == 0:
+                        # desempila X - se for sinc
+                        self.stack.pop(0)
+                    else: # entrada vazia
+                        # avança na leitura
+                        self.sentence.pop(0)
+        
+        if success:
+            print('\x1b[1;32m' + 'Compiled Successfully' + '\x1b[0m')
 
                 
