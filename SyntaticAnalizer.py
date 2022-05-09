@@ -23,17 +23,13 @@ class Syntatic_Analizer:
     
     def define_sentence(self):
         for item in self.program_tokens:
-            # print(item)
-            self.sentence.append(item[1])
-        # TO DO
-        # for item in self.sentence:
-        #     if item not in self.reserved_words and item not in self.symbols:
-        #         print(item, self.sentence.index(item))
-
+            if item[1] not in self.reserved_words:
+                for i in item[1]:
+                    self.sentence.append(i)
+            else:
+                self.sentence.append(item[1])
         
         self.sentence.append('$')
-
-        # print(self.sentence)
         
 
     def analyze(self):
