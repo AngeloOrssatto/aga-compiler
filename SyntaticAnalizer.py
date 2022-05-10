@@ -76,7 +76,7 @@ class Syntatic_Analizer:
                 else:
                     print('\x1b[1;31m' + '!ERROR' + '\x1b[0m' + ' - Primeiro caso: Unexpected token in line', self.tokens_localization[0][0], 'column', self.tokens_localization[0][1])
                     success = False
-                    break
+                    # break
                     # avança na sentença se simbolos forem diferentes
                     self.sentence.pop(0)
 
@@ -105,7 +105,7 @@ class Syntatic_Analizer:
                     print('\x1b[1;31m' + '!ERROR' + '\x1b[0m' + ' - Segundo caso: Unexpected token in line', self.tokens_localization[0][0], 'column', self.tokens_localization[0][1])
                     success = False
 
-                    break
+                    # break
                     # modo panico
                     # SYNC
                     if parsing_table.loc[X, a] == 0:
