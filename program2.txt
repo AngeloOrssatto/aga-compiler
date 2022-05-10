@@ -1,6 +1,0 @@
-int abcde;
-i = 100 if();
-
-if (i >= 10) {
-    write(i);
-}

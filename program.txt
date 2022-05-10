@@ -1,0 +1,12 @@
+float n1;
+float n2;
+float m;
+
+m = n1 + n2;
+m = m / 2;
+
+if (m >= 70.0) {
+    write(m);
+} else {
+    m = 70 - m;
+}
