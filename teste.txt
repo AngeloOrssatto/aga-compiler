@@ -1,6 +1,13 @@
-float m;
-read(m);
+
+boolean j;
+int i;
+
+i = 6;
 
 for i in range (0, 100){
-    m = m + i;
+    i = i + i;
+}
+
+if (i > 10 and not(j)){
+    write(j);
 }

@@ -10,7 +10,7 @@ def main():
     
     lexical = Lexical_Analizer(program, reserved_words, symbols, useless)
     tokens = lexical.analyze()
-    print(tokens)
+    # print(tokens)
 
     sintatic = Syntatic_Analizer(program, reserved_words, symbols, useless, tokens)
     sintatic.analyze()

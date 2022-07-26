@@ -1,3 +1,4 @@
+from email import message
 from terminals import tokens, reserved_words, symbols
 from grammar import non_terminals
 
@@ -25,13 +26,13 @@ class Semantic_Analizer:
     def checkUnusedVars(self):
         for var in self.symbol_table:
             if not var[2]:
-                print("!WARNING!", var[0], 'is declared but never used')
+                print('\033[93m' + '!!WARNING' + '\x1b[0m ' + var[0], 'is declared but never used')
     
     def var_declaration(self, token, next_token):
         # lexema, tipo, isUsed
         symbol = [next_token[1], token[1], False]
         self.symbol_table.append(symbol)
-        print('adiciona na tabela de simbolos', self.symbol_table)
+        # print('adiciona na tabela de simbolos', self.symbol_table)
     
     def getTypeOfVar(self, lex):
         for var in self.symbol_table:
@@ -49,17 +50,27 @@ class Semantic_Analizer:
         for symbol in self.symbol_table:
             if symbol[0] == lex:
                 return True
-        
-        print(lex, 'is not declared!')
         return False
     
     def matchTypes(self, types):
+        message = ''
+        # se todos são iguais
         # INT COM INT
-        # INT COM FLOAT
         # FLOAT COM FLOAT
         # BOOL COM BOOL
         # CHAR COM CHAR
-        return False
+        result = all(t == types[0] for t in types)
+        # INT COM FLOAT
+        # if not result:
+        #     for t in types:
+        #         if t not in ['int', 'float']:
+        #             print(t)
+        #             result = False
+        #             return result, 'Variable types doesnt match'
+        #     result = True
+        if not result:
+            message = 'Variable types doesnt match'
+        return result, message
     
     def analyzeMultipleVars(self, tokens):
         types = []
@@ -67,26 +78,31 @@ class Semantic_Analizer:
         for token in tokens:
             if token[0] == "{INT_NUMBER}":
                 types.append('int')
-                analyze = True
+                # analyze = True
             elif token[0] == "{FLOAT_NUMBER}":
                 types.append('float')
-                analyze = True
+                # analyze = True
             elif self.varIsDeclared(token):
                 types.append(self.getTypeOfVar(token[1]))
                 self.changeToUsedVar(token[1])
-                analyze = True
+                # analyze = True
             else:
-                print('Unvalid token')
-                return
-        print(types)
+                # print('unvalid', token)
+                message = token[1] + ' is not declared'
+                return False, message
 
-        self.matchTypes(types)
-        return analyze
+        # print(types)
+        result, message = self.matchTypes(types)
+        if not result:
+            # print(message)
+            return result, message
+        return True, ''
 
     
     def analyze(self):
         print('Semantic Analyzer...')
         i = 0
+        success = True
         while i < len(self.program_tokens):
             # print(self.program_tokens[i])
             #print(self.program_tokens[i])
@@ -112,10 +128,16 @@ class Semantic_Analizer:
                         k+=1
                     
                 print('tokens juntos', tokens_to_analize_together)
-                print(self.analyzeMultipleVars(tokens_to_analize_together))
+                result, message = self.analyzeMultipleVars(tokens_to_analize_together)
+                if not result:
+                    print('\x1b[1;31m' + '!!ERROR' + '\x1b[0m ' + message, 'in line', self.program_tokens[i][2], 'column', self.program_tokens[i][3])
+                    success = False
+                    break
                 i+=k
 
             
             i+=1
         self.checkUnusedVars()
+        if success:
+            print('\x1b[1;32m' + 'Compiled Successfully' + '\x1b[0m')
 
