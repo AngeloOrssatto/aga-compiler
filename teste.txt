@@ -1,0 +1,6 @@
+float m;
+read(m);
+
+for i in range (0, 100){
+    m = m + i;
+}

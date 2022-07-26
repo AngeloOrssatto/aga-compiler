@@ -1,7 +1,7 @@
 float m;
 read(m);
 
-if (m >= 70.0) {
+if (m >= 70.0 and m > 1000) {
     write(m);
 } else {
     m = 70 - m;
@@ -9,3 +9,11 @@ if (m >= 70.0) {
         m = m + i;
     }
 }
+
+int i;
+
+char caractere;
+
+boolean t;
+
+m = i + k / l;

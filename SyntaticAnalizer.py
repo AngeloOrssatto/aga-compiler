@@ -50,11 +50,11 @@ class Syntatic_Analizer:
             X = self.stack[0]
             a = self.sentence[0]
 
-            print('| Pilha:', self.stack)
-            print('| Senteça:', self.sentence)
-            print('| Topo pilha:', X)
-            print('| Leitura sentença:', a)
-            print('|---------------------------------------------------------------------')
+            # print('| Pilha:', self.stack)
+            # print('| Senteça:', self.sentence)
+            # print('| Topo pilha:', X)
+            # print('| Leitura sentença:', a)
+            # print('|---------------------------------------------------------------------')
 
             # Se for terminal
             if X not in self.non_terminals:
