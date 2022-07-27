@@ -1,13 +1,16 @@
 
-boolean j;
+int j;
 int i;
 
 i = 6;
+i = j + i * 2 / 3 + j;
 
-for i in range (0, 100){
-    i = i + i;
+if (i < j){
+    i = 0;
 }
 
-if (i > 10 and not(j)){
-    write(j);
+for i in range (0, 10) {
+    i = i + 1;
 }
+read(j);
+write(i);

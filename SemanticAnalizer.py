@@ -1,4 +1,3 @@
-from email import message
 from terminals import tokens, reserved_words, symbols
 from grammar import non_terminals
 
@@ -22,6 +21,9 @@ class Semantic_Analizer:
         self.symbols = symbols
         self.useless = useless
         self.program_tokens = program_tokens
+    
+    def getSymbolTable(self):
+        return self.symbol_table
     
     def checkUnusedVars(self):
         for var in self.symbol_table:
